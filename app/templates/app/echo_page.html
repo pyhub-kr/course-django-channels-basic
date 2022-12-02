@@ -19,8 +19,9 @@
     };
 
     ws.onmessage = (event) => {
-        const message = event.data;
-        console.log("메세지 수신 :", message);
+        const json_string = event.data;
+        const obj = JSON.parse(json_string);
+        console.log("메세지 수신 :", obj);
     };
 
     ws.onerror = () => {
