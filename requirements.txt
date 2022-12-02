@@ -1,0 +1,20 @@
+# 장고 프레임워크
+django~=4.1.0
+
+# 채널스 기본 라이브러리 + daphne
+channels[daphne]~=4.0.0
+
+# 채널스, 채널 레이어 Redis 백엔드 라이브러리
+channels_redis~=4.0.0
+
+# 환경변수의 손쉬운 settings 적용
+django-environ
+
+# 장고 내에서 손쉬운 bootstrap5 사용
+django-bootstrap5
+
+# 가벼운 HTTP 클라이언트 라이브러리
+requests
+
+# HTML 파싱 라이브러리
+beautifulsoup4
