@@ -38,7 +38,43 @@ const handlers = {
     onmessage(event) {
         const message_json = event.data;
         console.log("웹소켓 텍스트 메세지 수신 :", message_json);
+
+        const { type, post_id, post_partial_url } = JSON.parse(message_json);
+
+        switch(type) {
+            case "liveblog.post.created":
+                this.post_created(post_id, post_partial_url);
+                break;
+            case "liveblog.post.updated":
+                this.post_updated(post_id, post_partial_url);
+                break;
+            case "liveblog.post.deleted":
+                this.post_deleted(post_id);
+                break;
+            default:
+                console.error(`Invalid message type : ${type}`);
+        }
     },
+    post_created(post_id, post_partial_url) {
+        fetch(post_partial_url)
+            .then(response => response.text())
+            .then(html => {
+                document.querySelector("#post-list")
+                    .insertAdjacentElement("afterbegin", html);
+            });
+    },
+    post_updated(post_id, post_partial_url) {
+        fetch(post_partial_url)
+            .then(response => response.text())
+            .then(html => {
+                const css_selector = `[data-post-id="${post_id}"]`;
+                document.querySelector(css_selector).outerHTML = html;
+            });
+    },
+    post_deleted(post_id) {
+        const css_selector = `[data-post-id="${post_id}"]`;
+        document.querySelector(css_selector).remove();
+    }
 };
 
 const ws_url = "ws://localhost:8000/ws/liveblog/";
