@@ -60,7 +60,7 @@ const handlers = {
             .then(response => response.text())
             .then(html => {
                 document.querySelector("#post-list")
-                    .insertAdjacentElement("afterbegin", html);
+                    .insertAdjacentHTML("afterbegin", html);
             });
     },
     post_updated(post_id, post_partial_url) {
