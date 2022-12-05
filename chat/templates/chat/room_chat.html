@@ -1,5 +1,21 @@
 {% extends "chat/base.html" %}
 
+{% block extra-style %}
+<style>
+.chat-message > div {
+    background-color: #3b3b3b;
+    color: #e1e1e1;
+    border-radius: 0.8em;
+    padding: 0.4em;
+    margin: 0.4em 0;
+    display: inline-block;
+    white-space: pre-wrap;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+</style>
+{% endblock %}
+
 {% block content %}
     {# TODO: 웹소켓으로 실시간 채팅 기능 구현하기 #}
 
@@ -42,7 +58,11 @@ const handlers = {
     append_message(message) {
         const element = document.createElement("div");
         element.className = "chat-message";
-        element.textContent = message;
+
+        const wrapper = document.createElement("div");
+        wrapper.textContent = message;
+        element.appendChild(wrapper);
+
         this.chat_messages_tag.appendChild(element);
         this.chat_messages_tag.scrollTop = this.chat_messages_tag.scrollHeight;
 
