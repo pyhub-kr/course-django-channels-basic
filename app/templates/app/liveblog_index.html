@@ -16,20 +16,37 @@
 <script>
 const handlers = {
     ws: null,
+    retry: 0,
     connect(ws_url) {
-        this.ws = new WebSocket(ws_url);
+        this.ws = new WebSocket(ws_url || this.ws?.url);
 
         this.ws.onopen = this.onopen.bind(this);
         this.ws.onclose = this.onclose.bind(this);
         this.ws.onerror = this.onerror.bind(this);
         this.ws.onmessage = this.onmessage.bind(this);
     },
+    reconnect() {
+        this.connect();
+    },
     onopen() {
         console.log("웹소켓 서버와 접속");
+        this.retry = 0;
     },
     onclose(event) {
         if(!event.wasClean) {
             console.error("웹소켓 서버가 죽거나 네트워크 장애입니다.");
+
+            if( this.retry < 3 ) {
+                this.retry += 1;
+                setTimeout(() => {
+                    this.reconnect();
+                    console.log(`[${this.retry}] 접속 재시도 ...`);
+                }, 1000 * this.retry);
+            }
+            else {
+                alert("웹소켓 서버에 접속할 수 없습니다. 사이트 홈으로 이동합니다.");
+                window.location.href = "/";
+            }
         }
     },
     onerror() {
