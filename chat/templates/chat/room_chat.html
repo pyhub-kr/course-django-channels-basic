@@ -1,0 +1,11 @@
+{% extends "chat/base.html" %}
+
+{% block content %}
+    <h2>채팅방 : {{ room_name }}</h2>
+
+    {# TODO: 웹소켓으로 실시간 채팅 기능 구현하기 #}
+
+    <hr />
+
+    <a href="{% url 'chat:index' %}">대기실로 이동</a>
+{% endblock %}
