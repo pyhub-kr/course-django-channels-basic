@@ -11,3 +11,37 @@
         </div>
     </div>
 {% endblock %}
+
+{% block extra-body %}
+<script>
+const handlers = {
+    ws: null,
+    connect(ws_url) {
+        this.ws = new WebSocket(ws_url);
+
+        this.ws.onopen = this.onopen.bind(this);
+        this.ws.onclose = this.onclose.bind(this);
+        this.ws.onerror = this.onerror.bind(this);
+        this.ws.onmessage = this.onmessage.bind(this);
+    },
+    onopen() {
+        console.log("웹소켓 서버와 접속");
+    },
+    onclose(event) {
+        if(!event.wasClean) {
+            console.error("웹소켓 서버가 죽거나 네트워크 장애입니다.");
+        }
+    },
+    onerror() {
+        console.error("웹소켓 에러가 발생했습니다.");
+    },
+    onmessage(event) {
+        const message_json = event.data;
+        console.log("웹소켓 텍스트 메세지 수신 :", message_json);
+    },
+};
+
+const ws_url = "ws://localhost:8000/ws/liveblog/";
+handlers.connect(ws_url);
+</script>
+{% endblock %}
