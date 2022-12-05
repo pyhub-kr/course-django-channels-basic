@@ -1,0 +1,13 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+    <div class="container">
+        <h1>Hello</h1>
+
+        <div class="row" id="post-list">
+            {% for post in post_list %}
+                {% include "app/partial/post.html" with post=post only %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

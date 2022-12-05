@@ -1,0 +1,16 @@
+
+<div class="col-sm-4" data-post-id="{{ post.id }}">
+    <div class="card">
+        <img src="https://via.placeholder.com/572x360.png"
+             alt="placeholder image"
+             class="card-img-top" />
+        <div class="card-body">
+            <h5 class="card-title">
+                #{{ post.id }}. {{ post.title }}
+            </h5>
+            <div class="card-text">
+                {{ post.content|truncatewords:10 }}
+            </div>
+        </div>
+    </div>
+</div>
