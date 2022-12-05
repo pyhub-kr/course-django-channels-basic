@@ -28,3 +28,39 @@
         </div>
     </div>
 {% endblock %}
+
+{% block extra-script %}
+<script>
+const handlers = {
+    chat_messages_tag: null,
+
+    init() {
+        this.chat_messages_tag = document.querySelector("#chat_messages");
+        document.querySelector("#message_form")
+            .addEventListener("submit", this.onsubmit.bind(this));
+    },
+    append_message(message) {
+        const element = document.createElement("div");
+        element.className = "chat-message";
+        element.textContent = message;
+        this.chat_messages_tag.appendChild(element);
+        this.chat_messages_tag.scrollTop = this.chat_messages_tag.scrollHeight;
+
+    },
+    onsubmit(event) {
+        event.preventDefault();
+
+        const form_data = new FormData(event.target);
+        const props = Object.fromEntries(form_data);
+        event.target.reset();  // reset form
+
+        const { message } = props;
+        console.log("웹소켓으로 전송할 메세지 :", message);
+
+        this.append_message(message);
+    }
+};
+
+handlers.init();
+</script>
+{% endblock %}
