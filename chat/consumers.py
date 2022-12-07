@@ -1,6 +1,8 @@
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import JsonWebsocketConsumer
 
+from chat.models import Room
+
 
 class ChatConsumer(JsonWebsocketConsumer):
     def __init__(self, *args, **kwargs):
@@ -9,7 +11,7 @@ class ChatConsumer(JsonWebsocketConsumer):
 
     def connect(self):
         room_pk = self.scope["url_route"]["kwargs"]["room_pk"]
-        self.group_name = f"chat-{room_pk}"
+        self.group_name = Room.make_chat_group_name(room_pk=room_pk)
 
         async_to_sync(self.channel_layer.group_add)(
             self.group_name,
