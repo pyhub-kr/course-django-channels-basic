@@ -10,6 +10,7 @@
     <title>django channels</title>
     {% bootstrap_css %}
     {% bootstrap_javascript %}
+    {% block extra-style %}{% endblock %}
 </head>
 <body>
 
@@ -38,5 +39,8 @@
 
     {% block content %}{% endblock %}
 </div>
+
+{% block extra-script %}{% endblock %}
+
 </body>
 </html>
