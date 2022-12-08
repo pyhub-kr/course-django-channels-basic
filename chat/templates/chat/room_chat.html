@@ -134,10 +134,16 @@ const handlers = {
         const message_json = event.data;
         console.log("메세지 수신 :", message_json);
 
-        const { type, message, sender } = JSON.parse(message_json);
+        const { type, message, sender, username } = JSON.parse(message_json);
         switch(type) {
             case "chat.message":
                 this.append_message(message, sender);
+                break;
+            case "chat.user.join":
+                this.append_message(`${username}님이 들어오셨습니다.`);
+                break;
+            case "chat.user.leave":
+                this.append_message(`${username}님이 나가셨습니다.`);
                 break;
             default:
                 console.error(`Invalid message type : ${type}`);
