@@ -104,7 +104,14 @@ const handlers = {
         this.retry = 0;
     },
     onclose(event) {
-        if(!event.wasClean) {
+        const close_code = event.code;
+
+        if(close_code === 4000) {
+            this.modal("채팅방이 삭제되었습니다. 대기실로 이동합니다.", () => {
+                window.location.href = "{% url 'chat:index' %}";
+            });
+        }
+        else if(!event.wasClean) {
             console.error("웹소켓 서버가 죽었거나, 네트워크 장애입니다.");
             if(this.retry < 3) {
                 this.retry += 1;
