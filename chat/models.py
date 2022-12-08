@@ -4,6 +4,8 @@ from django.conf import settings
 from django.db import models
 from django.db.models.signals import post_delete
 
+from mysite.json_extended import ExtendedJSONEncoder, ExtendedJSONDecoder
+
 
 class OnlineUserMixin(models.Model):
     class Meta:
@@ -97,4 +99,8 @@ post_delete.connect(
 class RoomMember(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    channel_names = models.JSONField(default=set)
+    channel_names = models.JSONField(
+        default=set,
+        encoder=ExtendedJSONEncoder,
+        decoder=ExtendedJSONDecoder,
+    )
