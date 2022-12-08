@@ -26,11 +26,11 @@
 
         <div class="col-md-3 text-end">
             {% if not user.is_authenticated %}
-                <button type="button" class="btn btn-outline-primary me-2">로그인</button>
+                <a href="{% url 'accounts:login' %}" class="btn btn-outline-primary me-2">로그인</a>
                 <button type="button" class="btn btn-primary">회원가입</button>
             {% else %}
                 <button type="button" class="btn btn-outline-primary me-2">프로필</button>
-                <button type="button" class="btn btn-primary">로그아웃</button>
+                <a href="{% url 'accounts:logout' %}" class="btn btn-primary">로그아웃</a>
             {% endif %}
         </div>
     </header>
