@@ -1,0 +1,11 @@
+{% extends "chat/base.html" %}
+
+{% block content %}
+    <h2>{{ room.name }} 삭제하기</h2>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="alert alert-danger">삭제하시겠습니까?</div>
+        <input type="submit" class="btn btn-danger" value="삭제하겠습니다." />
+    </form>
+{% endblock %}

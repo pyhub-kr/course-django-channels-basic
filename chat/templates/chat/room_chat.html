@@ -49,6 +49,12 @@
             <hr class="my-3" />
 
             <a href="{% url 'chat:index' %}" class="btn btn-primary">대기실로 이동</a>
+
+            {% if request.user == room.owner %}
+                <a href="{% url 'chat:room_delete' room.pk %}" class="btn btn-danger">
+                    채팅방 삭제하기
+                </a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
