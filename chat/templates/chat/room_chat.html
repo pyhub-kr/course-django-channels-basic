@@ -57,6 +57,21 @@
             {% endif %}
         </div>
     </div>
+
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">알림</h5>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block extra-script %}
@@ -157,6 +172,21 @@ const handlers = {
             type: "chat.message",
             message: message,
         }))
+    },
+    modal(message, ok_handler) {
+        const modal_ele = document.querySelector("#staticBackdrop");
+        const body_ele = modal_ele.querySelector(".modal-body");
+        const button_ele = modal_ele.querySelector(".modal-footer button");
+
+        body_ele.textContent = message;
+
+        button_ele.addEventListener("click", () => {
+            if(ok_handler) ok_handler();
+            modal.hide();
+        });
+
+        const modal = new bootstrap.Modal(modal_ele);
+        modal.show();
     }
 };
 
