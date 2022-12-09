@@ -7,6 +7,9 @@ channels[daphne]~=4.0.0
 # 채널스, 채널 레이어 Redis 백엔드 라이브러리
 channels_redis~=4.0.0
 
+# 채널스, 채널 레이어 Redis 백엔드 라이브러리
+redis!=4.4.0
+
 # 환경변수의 손쉬운 settings 적용
 django-environ
 
