@@ -1,0 +1,8 @@
+-r common.txt
+
+pytest
+pytest-django
+pytest-testdox
+pytest-asyncio
+
+django-debug-toolbar

@@ -1,0 +1,6 @@
+-r common.txt
+
+gunicorn
+uvicorn[standard]
+
+psycopg2  # python3-dev libpq-dev 팩키지가 필요

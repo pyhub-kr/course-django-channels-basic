@@ -19,7 +19,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 env = Env()
-env_path = BASE_DIR / ".env"
+
+env_path = Path(env.str("ENV_PATH", default=str(BASE_DIR / ".env")))
+
 if env_path.exists():
     with env_path.open(encoding="utf8") as f:
         env.read_env(f, overwrite=True)
@@ -32,9 +34,9 @@ if env_path.exists():
 SECRET_KEY = 'django-insecure-0@k+rs*!!j$ga%*%*b=lgavw0i_k9rqi!rh#ryzo176^s74xvi'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool("DEBUG", default=True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
 
 
 # Application definition
@@ -92,11 +94,9 @@ ASGI_APPLICATION = 'mysite.asgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+default_database_url = f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    "default": env.db(default=default_database_url),
 }
 
 
